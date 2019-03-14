@@ -17,3 +17,8 @@ export const toggleTodo = id => ({
     type: actionTypes.TOGGLE_TODO,
     id
 });
+
+export const setFilter = filterType => ({
+    type: actionTypes.SET_FILTER,
+    filterType
+});

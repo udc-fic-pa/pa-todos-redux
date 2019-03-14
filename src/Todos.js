@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Todo from './Todo';
 import * as actions from './actions';
+import * as filterTypes from './filterTypes';
 
 const Todos = ({todos, onToggleCompleted}) => (
     <ul>
@@ -13,8 +14,23 @@ const Todos = ({todos, onToggleCompleted}) => (
     </ul>
 );
 
+const visibleTodos = (todos, filterType) => {
+
+    switch(filterType) {
+        case filterTypes.ALL:
+            return todos;
+        case filterTypes.ACTIVE:
+            return todos.filter(todo => !todo.completed);
+        case filterTypes.COMPLETED:
+            return todos.filter(todo => todo.completed);
+        default:
+            throw new Error(`Unknown filter type ${filterType}`);
+    }
+
+}
+
 const mapStateToProps = state => ({
-    todos: state.todos
+    todos: visibleTodos(state.todos, state.filterType)
 });
 
 const mapDispatchToProps = {

@@ -1,7 +1,9 @@
 import * as actionTypes from'./actionTypes';
+import * as filterTypes from './filterTypes';
 
 const initialState = {
-    todos: []
+    todos: [],
+    filterType: filterTypes.ALL
 };
 
 export const reducer = (state=initialState, action) => {
@@ -9,12 +11,15 @@ export const reducer = (state=initialState, action) => {
     switch(action.type) {
 
         case actionTypes.ADD_TODO:
-            return {todos: [action.todo, ...state.todos]};
+            return {...state, todos: [action.todo, ...state.todos]};
 
         case actionTypes.TOGGLE_TODO:
-            return {todos: state.todos.map(todo => {
+            return {...state, todos: state.todos.map(todo => {
                 return todo.id === action.id ? 
                     {...todo, completed: !todo.completed} : todo})}
+
+        case actionTypes.SET_FILTER:
+            return {...state, filterType: action.filterType}
 
         default:
             return state;
