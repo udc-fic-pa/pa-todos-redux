@@ -17,8 +17,8 @@ const mapStateToProps = state => ({
     todos: state.todos
 });
 
-const mapDispatchToProps = dispatch => ({
-    onToggleCompleted: id => dispatch(actions.toggleTodo(id))
-});
+const mapDispatchToProps = {
+    onToggleCompleted: actions.toggleTodo
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todos);
