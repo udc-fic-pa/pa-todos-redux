@@ -1,24 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Todo from './Todo';
 import * as actions from './actions';
+import * as selectors from './selectors';
 
-const Todos = ({todos, onToggleCompleted}) => (
-    <ul>
-        {todos.map(todo => 
-            <Todo key={todo.id} todo={todo}
-                onToggleCompleted={onToggleCompleted}/>)
-        }
-    </ul>
-);
+const Todos = () => {
 
-const mapStateToProps = state => ({
-    todos: state.todos
-});
+    const todos = useSelector(selectors.getVisibleTodos);
+    const dispatch = useDispatch();
+    
+    return (
+        <ul>
+            {todos.map(todo => 
+                <Todo key={todo.id} todo={todo}
+                    onToggleCompleted={id => dispatch(actions.toggleTodo(id))}/>)
+            }
+        </ul>
+    );
 
-const mapDispatchToProps = dispatch => ({
-    onToggleCompleted: id => dispatch(actions.toggleTodo(id))
-});
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todos);
+export default Todos;
