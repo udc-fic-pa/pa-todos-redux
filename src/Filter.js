@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import * as filterTypes from './filterTypes';
 import * as actions from './actions';
+import * as selectors from './selectors';
 
 const Filter = ({filterType, onFilterClick}) => (
 
@@ -18,7 +19,7 @@ const Filter = ({filterType, onFilterClick}) => (
 );
 
 const mapStateToProps = state => ({
-    filterType: state.filterType
+    filterType: selectors.getFilterType(state)
 });
 
 const mapDispatchToProps = {

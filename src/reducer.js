@@ -1,3 +1,5 @@
+import {combineReducers} from 'redux';
+
 import * as actionTypes from'./actionTypes';
 import * as filterTypes from './filterTypes';
 
@@ -6,25 +8,40 @@ const initialState = {
     filterType: filterTypes.ALL
 };
 
-export const reducer = (state=initialState, action) => {
+const todos = (state=initialState.todos, action) => {
 
     switch(action.type) {
 
         case actionTypes.ADD_TODO:
-            return {...state, todos: [action.todo, ...state.todos]};
+            return [action.todo, ...state];
 
         case actionTypes.TOGGLE_TODO:
-            return {...state, todos: state.todos.map(todo => {
+            return state.map(todo => {
                 return todo.id === action.id ? 
-                    {...todo, completed: !todo.completed} : todo})}
-
-        case actionTypes.SET_FILTER:
-            return {...state, filterType: action.filterType}
+                    {...todo, completed: !todo.completed} : todo});
 
         default:
             return state;
     }
 
-}
+};
+
+const filterType = (state=initialState.filterType, action) => {
+
+    switch(action.type) {
+
+        case actionTypes.SET_FILTER:
+            return action.filterType;
+
+        default:
+            return state;
+    }
+
+};
+
+const reducer = combineReducers({
+    todos,
+    filterType
+});
 
 export default reducer;
