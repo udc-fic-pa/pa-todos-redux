@@ -1,5 +1,3 @@
-import React from 'react';
-
 import AddTodo from './AddTodo';
 import Todos from './Todos';
 
